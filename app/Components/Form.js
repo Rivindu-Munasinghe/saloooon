@@ -22,7 +22,7 @@ export default function CustReg({navigation}){
         .signInWithEmailAndPassword(email, password)
         .then(() => {
           console.log('User account created & signed in!');
-          
+          alert("You have loged in ")
         })
   }
 

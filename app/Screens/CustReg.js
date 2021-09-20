@@ -20,17 +20,26 @@ import { firebase } from '../navigation/firebase';
 export default function CustReg({navigation}) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [firstname, setfirstname] = useState('')
+  const [lastname, setlastname]  = useState('')
+  const [mobileno, setmobile] = useState('')
+  const [address, setaddress] = useState('')
+  const [confirmPassword, setcofirmPassword] = useState('')
 
   const onRegisterPress = () => {
-    // if (password !== confirmPassword) {
-    //     alert("Passwords don't match.")
-    //     return
-    // }
+     if (password !== confirmPassword) {
+         alert("Passwords don't match.")
+         return
+     }
     firebase
         .auth()
         .createUserWithEmailAndPassword(email,password)
+        .then(() => {
+          console.log('User account created & signed in!');
+          alert("You have Signed in ")
+        })
   }
-  
+ 
     return (
       <ImageBackground style={styles.container}
         source={require('../assets/bg-01.png')}>
@@ -49,18 +58,26 @@ export default function CustReg({navigation}) {
         <TextInput style={styles.textinput1} 
         placeholder="First Name" 
         underlineColorAndroid={'transparent'}
+        labelValue={firstname}
+        onChangeText={(firstname)=>setfirstname(firstname)}
+        autoCapitalize="none"
+        autoCorrect={false}
         />
 
         <TextInput style={styles.textinput2}
         placeholder="Last Name" 
         underlineColorAndroid={'transparent'}
+        labelValue={lastname}
+        onChangeText={(lastname)=>setlastname(lastname)}
+        autoCapitalize="none"
+        autoCorrect={false}
         />
 
         <TextInput style={styles.textinput} 
         labelValue={email}
         onChangeText={(userEmail)=>setEmail(userEmail)}
         placeholder="Email"
-        keyboardType="email-address"
+
         autoCapitalize="none"
         autoCorrect={false}
         />
@@ -78,11 +95,19 @@ export default function CustReg({navigation}) {
         <TextInput style={styles.textinput5} 
         placeholder="Mobile Number" 
         underlineColorAndroid={'transparent'}
+        labelValue={mobileno}
+        onChangeText={(mobileno)=>setmobile(mobileno)}
+        autoCapitalize="none"
+        autoCorrect={false}
         />
         
         <TextInput style={styles.textinput5} 
         placeholder="Address" 
         underlineColorAndroid={'transparent'}
+        labelValue={address}
+        onChangeText={(address)=>setaddress(address)}
+        autoCapitalize="none"
+        autoCorrect={false}
         />
         
         <TextInput style={styles.textinput5} 
@@ -95,7 +120,9 @@ export default function CustReg({navigation}) {
         <TextInput style={styles.textinput5} 
         placeholder=" Confirm Password" 
         underlineColorAndroid={'transparent'} 
-        secureTextEntry
+        secureTextEntry={true}
+        labelValue={confirmPassword}
+        onChangeText={(confirmPassword)=>setcofirmPassword(confirmPassword)}
         />
         
         <TouchableOpacity style={styles.button}
@@ -131,7 +158,7 @@ export default function CustReg({navigation}) {
     textinput:{
       width:375,
       height:40,
-      top:'-7%',
+      top:'-6%',
       backgroundColor:'#fff',
       borderRadius:25,
       paddingHorizontal:16,
@@ -175,7 +202,7 @@ export default function CustReg({navigation}) {
       paddingHorizontal:16,
       fontSize:16,
       color:'#3A292A',
-      top:'-7.3%',
+      top:'-6%',
       left:'25%',
       elevation:5,
       shadowColor:'#000',
@@ -215,7 +242,7 @@ export default function CustReg({navigation}) {
       paddingHorizontal:16,
       fontSize:16,
       color:'#3A292A',
-      top:'-15.3%',
+      top:'-14%',
       left:'25%',
       elevation:5,
       shadowColor:'#000',
@@ -235,7 +262,7 @@ export default function CustReg({navigation}) {
       paddingHorizontal:16,
       fontSize:16,
       color:'#3A292A',
-      top:'-15.3%',
+      top:'-14%',
       elevation:5,
       shadowColor:'#000',
       shadowOffset:{
