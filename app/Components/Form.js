@@ -1,4 +1,4 @@
-import React, { useState }  from 'react';
+import React, { useState,useEffect }  from 'react';
 import { 
   StyleSheet, 
   Text, 
@@ -6,18 +6,26 @@ import {
   TextInput,
   TouchableOpacity
 } from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import { firebase } from '../navigation/firebase';
 
-const onLoginPress = () => {
-  firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password)
-}
 
-export default function Form() {
+export default function CustReg({navigation}){
+//export default function Form() {
   const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+  const [password, setPassword] = useState('')
+  const onLoginPress = () => {
+    firebase
+        .auth()
+        .signInWithEmailAndPassword(email, password)
+        .then(() => {
+          console.log('User account created & signed in!');
+          
+        })
+  }
+
     return (
       <View style={styles.container}>
           <TextInput style={styles.inputbox} 

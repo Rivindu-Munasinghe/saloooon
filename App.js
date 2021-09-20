@@ -15,6 +15,7 @@ import SelectScreen from './app/Screens/SelectScreen';
 import CustReg from './app/Screens/CustReg';
 import MerchantReg from './app/Screens/MerchantReg';
 import ShopReg from './app/Screens/ShopReg';
+import Form from './app/Components/Form';
 import * as firebase from "firebase";
 
 const AppStack= createStackNavigator();
