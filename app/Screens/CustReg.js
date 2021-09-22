@@ -15,6 +15,8 @@ import {
 import LoginScreen from './LoginScreen';
 import { AuthContext } from '../navigation/AuthProvider';
 import { firebase } from '../navigation/firebase';
+import DateTimePicker from '@react-native-community/datetimepicker';
+
 
 
 export default function CustReg({navigation}) {
@@ -43,6 +45,16 @@ export default function CustReg({navigation}) {
     return (
       <ImageBackground style={styles.container}
         source={require('../assets/bg-01.png')}>
+          {show && (
+        <DateTimePicker
+          testID="dateTimePicker"
+          value={date}
+          mode={mode}
+          is24Hour={true}
+          display="default"
+          onChange={onChange}
+        />
+      )}
         <TouchableOpacity>
           <Image
             style={{width:28, height:28,position:'absolute',top:"10%",left:"-45%",}}

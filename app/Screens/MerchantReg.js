@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { 
   ActivityIndicatorBase,
   StyleSheet, 
@@ -11,45 +11,121 @@ import {
   ImageBackground,
   ScrollView
 } from 'react-native';
+import { firebase } from '../navigation/firebase';
+import KeyboardAvoidingWrapper from '../Components/KeyboardAvoidingWrapper';
+
 
 const MerchantReg=({navigation})=>{
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [firstname, setfirstname] = useState('')
+  const [lastname, setlastname]  = useState('')
+  const [mobileno, setmobile] = useState('')
+  const [confirmPassword, setcofirmPassword] = useState('')
+
+  const onRegisterPress = ({ navigation}) => {
+     if (password !== confirmPassword) {
+         alert("Passwords don't match.")
+         return
+     }
+    firebase
+        .auth()
+        .createUserWithEmailAndPassword(email,password)
+        .then(() => {
+          console.log('User account created & signed in!');
+          alert("You have Signed in ");
+          navigation.navigate('Welcome')
+        })
+        
+  }
+
     return (
+      <KeyboardAvoidingWrapper>
       <ImageBackground style={styles.container}
-        source={require('../assets/bg-01.png')}>
+      source={require('../assets/bg-01.png')}>
         <TouchableOpacity>
           <Image
             style={{width:28, height:28,position:'absolute',top:"10%",left:"-45%",}}
             source={require('../assets/back.png')}
             onPress={() => navigation.navigate("SelectScreen")}
-          />
+            />
         </TouchableOpacity>
         <Text style={styles.header}>Register as Merchant</Text>
         <Image
           style={{width:105, height:111, top:'2%'}}
           source={require('../assets/pic.png')}/>
-        <TextInput style={styles.textinput1} placeholder="First Name" 
-        underlineColorAndroid={'transparent'}/>
-        <TextInput style={styles.textinput2} placeholder="Last Name" 
-        underlineColorAndroid={'transparent'}/>
-        <TextInput style={styles.textinput} placeholder="Email" 
-        underlineColorAndroid={'transparent'}/>
-        <TextInput style={styles.textinput3} placeholder="Gender" 
-        underlineColorAndroid={'transparent'}/>
-        <TextInput style={styles.textinput4} placeholder="Birthday" 
-        underlineColorAndroid={'transparent'}/>
-        <TextInput style={styles.textinput5} placeholder="Mobile Number" 
-        underlineColorAndroid={'transparent'}/>
-        <TextInput style={styles.textinput5} placeholder="Password" 
-        underlineColorAndroid={'transparent'} secureTextEntry/>
-        <TextInput style={styles.textinput5} placeholder=" Confirm Password" 
-        underlineColorAndroid={'transparent'} secureTextEntry/>
-        <TouchableOpacity style={styles.button}>
-            <Text style={styles.btnTxt}
-              onPress={() => navigation.navigate ("ShopReg")}>
+        
+          
+        
+        <TextInput style={styles.textinput1} 
+        placeholder="First Name" 
+        underlineColorAndroid={'transparent'}
+        labelValue={firstname}
+        onChangeText={(firstname)=>setfirstname(firstname)}
+        autoCapitalize="none"
+        autoCorrect={false}
+        />
+
+        <TextInput style={styles.textinput2} 
+        placeholder="Last Name" 
+        underlineColorAndroid={'transparent'}
+        labelValue={lastname}
+        onChangeText={(lastname)=>setlastname(lastname)}
+        autoCapitalize="none"
+        autoCorrect={false}
+        />
+
+        <TextInput style={styles.textinput} 
+        labelValue={email}
+        onChangeText={(userEmail)=>setEmail(userEmail)}
+        placeholder="Email"
+        autoCapitalize="none"
+        autoCorrect={false}
+        />
+
+        <TextInput style={styles.textinput3} 
+        placeholder="Gender" 
+        underlineColorAndroid={'transparent'}
+        />
+        <TextInput style={styles.textinput4} 
+        placeholder="Birthday" 
+        underlineColorAndroid={'transparent'}
+        />
+        
+        <TextInput style={styles.textinput5} 
+        placeholder="Mobile Number" 
+        underlineColorAndroid={'transparent'}
+        labelValue={mobileno}
+        onChangeText={(mobileno)=>setmobile(mobileno)}
+        autoCapitalize="none"
+        autoCorrect={false}
+        />
+        
+        <TextInput style={styles.textinput5} 
+       labelValue={password}
+       onChangeText={(userPassword)=>setPassword(userPassword)}
+       placeholder="Password"
+       secureTextEntry={true}
+        />
+
+        
+        <TextInput style={styles.textinput5}
+         placeholder=" Confirm Password" 
+         underlineColorAndroid={'transparent'} 
+         secureTextEntry={true}
+         labelValue={confirmPassword}
+         onChangeText={(confirmPassword)=>setcofirmPassword(confirmPassword)} 
+        />
+        
+        <TouchableOpacity style={styles.button}
+          onPress={() => {onRegisterPress()} }>
+            <Text style={styles.btnTxt}>
                 Next
             </Text>
         </TouchableOpacity>
+           
       </ImageBackground>
+      </KeyboardAvoidingWrapper> 
     );
   }
 
@@ -61,6 +137,8 @@ export default MerchantReg;
       backgroundColor:"#EFE5DA",
       justifyContent:'center',
       alignItems:'center',
+      height:null,
+      width:null,
     },
     header:{
       fontFamily:'Roboto',
@@ -214,7 +292,7 @@ export default MerchantReg;
       marginVertical:10,
       marginHorizontal:10,
       position:'absolute',
-      top:'86.5%',
+      top:'90%',
       //left:'40%',
     },
 });
