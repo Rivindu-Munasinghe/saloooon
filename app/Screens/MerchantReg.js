@@ -9,7 +9,7 @@ import {
   View ,
   StatusBar,
   ImageBackground,
-  ScrollView
+  Picker,
 } from 'react-native';
 import { firebase } from '../navigation/firebase';
 import KeyboardAvoidingWrapper from '../Components/KeyboardAvoidingWrapper';
@@ -20,8 +20,11 @@ const MerchantReg=({navigation})=>{
   const [password, setPassword] = useState('')
   const [firstname, setfirstname] = useState('')
   const [lastname, setlastname]  = useState('')
+  const [gender, setgender] = useState('')
   const [mobileno, setmobile] = useState('')
   const [confirmPassword, setcofirmPassword] = useState('')
+
+  const [selectedValue, setSelectedValue] = useState("Gender");
 
   const onRegisterPress = ({ navigation}) => {
      if (password !== confirmPassword) {
@@ -34,7 +37,7 @@ const MerchantReg=({navigation})=>{
         .then(() => {
           console.log('User account created & signed in!');
           alert("You have Signed in ");
-          navigation.navigate('Welcome')
+          navigation.navigate('ShopReg');
         })
         
   }
@@ -54,9 +57,6 @@ const MerchantReg=({navigation})=>{
         <Image
           style={{width:105, height:111, top:'2%'}}
           source={require('../assets/pic.png')}/>
-        
-          
-        
         <TextInput style={styles.textinput1} 
         placeholder="First Name" 
         underlineColorAndroid={'transparent'}
@@ -83,10 +83,24 @@ const MerchantReg=({navigation})=>{
         autoCorrect={false}
         />
 
-        <TextInput style={styles.textinput3} 
-        placeholder="Gender" 
-        underlineColorAndroid={'transparent'}
-        />
+        <Picker style={styles.textinput3}
+          itemStyle={{backgroundColor:'#fff'}}
+          placeholder="Gender"
+          labelValue={gender}
+          selectedValue={selectedValue}
+          onValueChange={(gender, itemIndex) => 
+            {if(gender !== "disabled"){
+              setSelectedValue(gender)}
+              setgender(gender)
+            }}
+          
+        >
+          <Picker.Item label="Gender" value="disabled" color="#aaa" />
+          <Picker.Item label="Male" value="Male" />
+          <Picker.Item label="Female" value="Female" />
+        </Picker>
+
+
         <TextInput style={styles.textinput4} 
         placeholder="Birthday" 
         underlineColorAndroid={'transparent'}
@@ -212,20 +226,20 @@ export default MerchantReg;
     textinput3:{
       width:175,
       height:40,
-      backgroundColor:'#fff',
-      borderRadius:25,
-      paddingHorizontal:16,
-      fontSize:16,
+      //backfaceVisibility : "visible",
+      // borderRadius:25,
+      // paddingHorizontal:16,
+      // fontSize:16,
       color:'#3A292A',
       top:'-6.7%',
       left:'-25%',
-      elevation:5,
-      shadowColor:'#000',
-      shadowOffset:{
-        width:1,
-        height:1,
-      },
-      shadowRadius:100,
+      // elevation:5,
+      // shadowColor:'#000',
+      // shadowOffset:{
+      //   width:1,
+      //   height:1,
+      // },
+      // shadowRadius:100,
       marginVertical:10,
       marginHorizontal:10,
     },

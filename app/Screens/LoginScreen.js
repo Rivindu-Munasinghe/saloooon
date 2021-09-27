@@ -11,9 +11,11 @@ import Logo from "../Components/Logo";
 import Form from "../Components/Form";
 import react from 'react';
 import { createStackNavigator } from 'react-navigation-stack';
+import KeyboardAvoidingWrapper from '../Components/KeyboardAvoidingWrapper';
 
 const LoginScreen=({navigation})=>{
     return (
+      <KeyboardAvoidingWrapper>
       <ImageBackground style={styles.container} source={require("../assets/bg-01.png")}>
       <View >
         <Logo/>
@@ -27,6 +29,7 @@ const LoginScreen=({navigation})=>{
         </View>
       </View>
       </ImageBackground>
+      </KeyboardAvoidingWrapper>
     );
 }
 

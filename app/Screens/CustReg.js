@@ -9,6 +9,7 @@ import {
   View ,
   StatusBar,
   ImageBackground,
+  Picker,
   ScrollView
 } from 'react-native';
 //import * as firebase from "firebase";
@@ -16,7 +17,7 @@ import LoginScreen from './LoginScreen';
 import { AuthContext } from '../navigation/AuthProvider';
 import { firebase } from '../navigation/firebase';
 import DateTimePicker from '@react-native-community/datetimepicker';
-
+import KeyboardAvoidingWrapper from '../Components/KeyboardAvoidingWrapper';
 
 
 export default function CustReg({navigation}) {
@@ -24,9 +25,18 @@ export default function CustReg({navigation}) {
   const [password, setPassword] = useState('')
   const [firstname, setfirstname] = useState('')
   const [lastname, setlastname]  = useState('')
+  const [gender, setgender] = useState('')
   const [mobileno, setmobile] = useState('')
   const [address, setaddress] = useState('')
   const [confirmPassword, setcofirmPassword] = useState('')
+
+  // state={gender:""};
+  // showgender=(option) =>{
+  //   alert(option);
+  //   this.setState({gender: option});
+  // }
+
+  const [selectedValue, setSelectedValue] = useState("Gender");
 
   const onRegisterPress = () => {
      if (password !== confirmPassword) {
@@ -41,20 +51,13 @@ export default function CustReg({navigation}) {
           alert("You have Signed in ")
         })
   }
+
  
     return (
+      <KeyboardAvoidingWrapper>
+
       <ImageBackground style={styles.container}
         source={require('../assets/bg-01.png')}>
-          {show && (
-        <DateTimePicker
-          testID="dateTimePicker"
-          value={date}
-          mode={mode}
-          is24Hour={true}
-          display="default"
-          onChange={onChange}
-        />
-      )}
         <TouchableOpacity>
           <Image
             style={{width:28, height:28,position:'absolute',top:"10%",left:"-45%",}}
@@ -94,10 +97,23 @@ export default function CustReg({navigation}) {
         autoCorrect={false}
         />
         
-        <TextInput style={styles.textinput3} 
-        placeholder="Gender" 
-        underlineColorAndroid={'transparent'}
-        />
+        <Picker style={styles.textinput3}
+          itemStyle={{backgroundColor:'#fff'}}
+          placeholder="Gender"
+          labelValue={gender}
+          selectedValue={selectedValue}
+          onValueChange={(gender, itemIndex) => 
+            {if(gender !== "disabled"){
+              setSelectedValue(gender)}
+              setgender(gender)
+            }}
+          
+        >
+          <Picker.Item label="Gender" value="disabled" color="#aaa" />
+          <Picker.Item label="Male" value="Male" />
+          <Picker.Item label="Female" value="Female" />
+        </Picker>
+        
         
         <TextInput style={styles.textinput4} 
         placeholder="Birthday" 
@@ -145,6 +161,7 @@ export default function CustReg({navigation}) {
             
         </TouchableOpacity>
       </ImageBackground>
+      </KeyboardAvoidingWrapper>
     );
   }
 
@@ -229,20 +246,20 @@ export default function CustReg({navigation}) {
     textinput3:{
       width:175,
       height:40,
-      backgroundColor:'#fff',
-      borderRadius:25,
-      paddingHorizontal:16,
-      fontSize:16,
+      //backfaceVisibility : "visible",
+      // borderRadius:25,
+      // paddingHorizontal:16,
+      // fontSize:16,
       color:'#3A292A',
       top:'-6.7%',
       left:'-25%',
-      elevation:5,
-      shadowColor:'#000',
-      shadowOffset:{
-        width:1,
-        height:1,
-      },
-      shadowRadius:100,
+      // elevation:5,
+      // shadowColor:'#000',
+      // shadowOffset:{
+      //   width:1,
+      //   height:1,
+      // },
+      // shadowRadius:100,
       marginVertical:10,
       marginHorizontal:10,
     },

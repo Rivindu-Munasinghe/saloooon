@@ -11,9 +11,12 @@ import {
   ImageBackground,
   ScrollView
 } from 'react-native';
+import KeyboardAvoidingWrapper from '../Components/KeyboardAvoidingWrapper';
+
 
 const ShopReg=({navigation})=>{
     return (
+      <KeyboardAvoidingWrapper>
       <ImageBackground style={styles.container}
         source={require('../assets/bg-01.png')}>
         <TouchableOpacity>
@@ -21,7 +24,7 @@ const ShopReg=({navigation})=>{
             style={{width:28, height:28,position:'absolute',top:"10%",left:"-45%",}}
             source={require('../assets/back.png')}
             onPress={() => navigation.navigate("SelectScreen")}
-          />
+            />
         </TouchableOpacity>
         <Text style={styles.header}>Register your Salon</Text>
         <Image
@@ -49,6 +52,8 @@ const ShopReg=({navigation})=>{
             </Text>
         </TouchableOpacity>
       </ImageBackground>
+        
+      </KeyboardAvoidingWrapper>
     );
   }
 
